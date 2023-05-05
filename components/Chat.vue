@@ -66,6 +66,18 @@
           <time :datetime="activityItem.dateTime" class="flex-none py-0.5 text-xs leading-5 text-gray-500">{{ activityItem.date }}</time>
         </template>
 
+        <template v-else-if="activityItem.type === 'read'">
+          <div class="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
+            <CheckCircleIcon v-if="activityItem.type === 'read'" class="h-6 w-6 text-black-600" aria-hidden="true" />
+            <div v-else class="h-1.5 w-1.5 rounded-full bg-gray-100 ring-1 ring-gray-300" />
+          </div>
+          <p class="flex-auto py-0.5 text-xs leading-5 text-gray-500">
+            <span class="font-medium text-gray-900">{{ activityItem.person.name }}</span>
+          </p>
+          <time :datetime="activityItem.dateTime" class="flex-none py-0.5 text-xs leading-5 text-gray-500">{{ activityItem.date }}</time>
+        </template>
+
+
       </li>
     </ul>
   
@@ -238,7 +250,7 @@
         dateTime: todo.due_date,
       };
       activity.value.push(todoActivity);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
 
     } catch (error) {
