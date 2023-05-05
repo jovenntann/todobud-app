@@ -11,7 +11,7 @@
             <p class="text-gray-400 italic">Status: {{ todo.status }}</p>
           </div>
           <div class="ml-3 flex h-6 items-center">
-            <input :id="'todo-' + todo.id" :aria-describedby="'todo-' + todo.id + '-description'" name="todos" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+            <input :id="'todo-' + todo.id" :aria-describedby="'todo-' + todo.id + '-description'" name="todos" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" :checked="isDone(todo)" @change="toggleStatus(todo)" />
           </div>  
         </div>
       </div>
@@ -38,6 +38,12 @@ const fetchTodos = async () => {
   } else {
     console.error('Error fetching todos:', response.statusText);
   }
+};
+
+const isDone = (todo) => todo.status === 'done';
+
+const toggleStatus = (todo) => {
+  todo.status = isDone(todo) ? 'todo' : 'done';
 };
 
 onMounted(fetchTodos);
