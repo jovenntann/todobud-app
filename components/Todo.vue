@@ -20,25 +20,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { inject } from 'vue';
 
-const todos = ref([]);
-
-const fetchTodos = async () => {
-  const response = await fetch('http://0.0.0.0:8000/public/guests/2/todos/', {
-    method: 'GET',
-    headers: {
-      'accept': 'application/json'
-    }
-  });
-
-  if (response.ok) {
-    const data = await response.json();
-    todos.value = data.results;
-  } else {
-    console.error('Error fetching todos:', response.statusText);
-  }
-};
+const todos = inject('todos');
 
 const isDone = (todo) => todo.status === 'done';
 
@@ -46,5 +30,4 @@ const toggleStatus = (todo) => {
   todo.status = isDone(todo) ? 'todo' : 'done';
 };
 
-onMounted(fetchTodos);
 </script>

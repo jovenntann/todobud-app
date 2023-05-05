@@ -1,17 +1,3 @@
-<!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
 <template>
     <ul ref="activityList" role="list" class="space-y-6 overflow-y-auto h-96">
 
@@ -143,6 +129,7 @@
   
   <script setup>
   import { ref, onUpdated } from 'vue'
+  import useTodos from '~/composables/useTodos';
   import { CheckCircleIcon, InformationCircleIcon, XCircleIcon } from '@heroicons/vue/24/solid'
   import {
     FaceFrownIcon,
@@ -155,6 +142,9 @@
   } from '@heroicons/vue/20/solid'
   import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
   
+  const todos = inject('todos');
+  const { fetchTodos } = useTodos(todos); 
+
   const activityList = ref(null);
   const activity = ref([
     {
@@ -235,7 +225,7 @@
         },
         comment: responseData.response,
         date: '',
-        dateTime: responseData.todos[0].due_date + 'T00:00',
+        dateTime: '',
       }
       activity.value.push(newActivity)
       console.log(activity)
@@ -251,6 +241,8 @@
       };
       activity.value.push(todoActivity);
       await new Promise((resolve) => setTimeout(resolve, 500));
+
+      await fetchTodos();
     }
 
     } catch (error) {

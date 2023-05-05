@@ -22,7 +22,7 @@
     ```
   -->
   <div class="min-h-full">
-    <Popover as="header" class="bg-indigo-600 pb-24" v-slot="{ open }">
+    <Popover as="header" class="bg-green-600 pb-24" v-slot="{ open }">
       <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <div class="relative flex items-center justify-center py-5 lg:justify-between">
           <!-- Logo -->
@@ -126,10 +126,10 @@
                   </div>
                   <div class="mt-3 space-y-1 px-2">
                     <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800">Home</a>
-                    <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800">Profile</a>
-                    <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800">Resources</a>
-                    <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800">Company Directory</a>
-                    <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800">Openings</a>
+                    <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800">Summary</a>
+                    <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800">Reports</a>
+                    <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800">Tasks</a>
+                    <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800">Inbox</a>
                   </div>
                 </div>
                 <div class="pb-2 pt-4">
@@ -198,6 +198,7 @@
 </template>
 
 <script setup>
+import useTodos from '~/composables/useTodos';
 import {
   Menu,
   MenuButton,
@@ -213,6 +214,14 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
+const todos = ref([]);
+provide('todos', todos);
+
+const { fetchTodos } = useTodos(todos);
+
+onMounted(fetchTodos);
+
+
 const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
@@ -221,10 +230,10 @@ const user = {
 }
 const navigation = [
   { name: 'Home', href: '#', current: true },
-  { name: 'Profile', href: '#', current: false },
-  { name: 'Resources', href: '#', current: false },
-  { name: 'Company Directory', href: '#', current: false },
-  { name: 'Openings', href: '#', current: false },
+  { name: 'Summary', href: '#', current: false },
+  { name: 'Reports', href: '#', current: false },
+  { name: 'Tasks', href: '#', current: false },
+  { name: 'Inbox', href: '#', current: false },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
