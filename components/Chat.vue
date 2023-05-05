@@ -6,12 +6,12 @@
           <div class="w-px bg-gray-200" />
         </div>
 
-        <template v-if="activityItem.type === 'commented'">
+        <template v-if="activityItem.type === 'replied'">
           <img :src="activityItem.person.imageUrl" alt="" class="relative mt-3 h-6 w-6 flex-none rounded-full bg-gray-50" />
           <div class="flex-auto rounded-md p-3 ring-1 ring-inset ring-gray-200">
             <div class="flex justify-between gap-x-4">
               <div class="py-0.5 text-xs leading-5 text-gray-500">
-                <span class="font-medium text-gray-900">{{ activityItem.person.name }}</span> commented
+                <span class="font-medium text-gray-900">{{ activityItem.person.name }}</span> replied
               </div>
               <time :datetime="activityItem.dateTime" class="flex-none py-0.5 text-xs leading-5 text-gray-500">{{ activityItem.date }}</time>
             </div>
@@ -62,9 +62,19 @@
           </p>
           <time :datetime="activityItem.dateTime" class="flex-none py-0.5 text-xs leading-5 text-gray-500">{{ activityItem.date }}</time>
         </template>
-
-
       </li>
+
+      <div v-if="isTyping" class="flex items-center mt-3 ml-3">
+          <img
+            src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/plant.png"
+            alt=""
+            class="h-6 w-6 flex-none rounded-full bg-gray-50"
+          />
+          <div class="ml-3 rounded-md p-3 ring-1 ring-inset ring-gray-200">
+            <div class="typing-effect border-b-2 border-gray-500"></div>
+          </div>
+        </div>
+
     </ul>
   
     <!-- New comment form -->
@@ -149,7 +159,7 @@
   const activity = ref([
     {
       id: 1,
-      type: 'commented',
+      type: 'replied',
       person: {
         name: 'TodoBud AI',
         imageUrl:
@@ -172,6 +182,10 @@
   
   const selected = ref(moods[5])
 
+  const isTyping = ref(false)
+
+
+
   const scrollToBottom = () => {
     activityList.value.scrollTop = activityList.value.scrollHeight
   }
@@ -181,12 +195,12 @@
     if (!comment) return
 
     try {
-
+      isTyping.value = true
       const userNewActivity = {
         id: 2,
-        type: 'commented',
+        type: 'replied',
         person: {
-          name: 'Joven Tan',
+          name: 'John Doe',
           imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
         comment: comment,
@@ -209,16 +223,19 @@
       })
 
       if (!response.ok) {
+        isTyping.value = false
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
 
       const responseData = await response.json()
       console.log(responseData)
 
+      isTyping.value = false
+
       // Add API response to the activity array
       const newActivity = {
         id: 10,
-        type: 'commented',
+        type: 'replied',
         person: {
           name: 'TodoBud AI',
           imageUrl: 'https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/plant.png',
@@ -256,3 +273,22 @@
 
 
   </script>
+
+<style scoped>
+  .typing-effect {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid;
+    animation: typing 2s steps(30, end),
+              blink-caret 0.5s step-end infinite alternate;
+  }
+
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  @keyframes blink-caret {
+    50% { border-color: transparent; }
+  }
+</style>
