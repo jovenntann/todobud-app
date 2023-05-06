@@ -1,5 +1,5 @@
 <template>
-    <ul ref="activityList" role="list" class="space-y-6 overflow-y-auto h-96">
+    <ul ref="activityList" role="list" class="space-y-6 overflow-y-auto h-96 pr-6">
 
       <li v-for="(activityItem, activityItemIdx) in activity" :key="activityItem.id" class="relative flex gap-x-4">
         <div :class="[activityItemIdx === activity.length - 1 ? 'h-6' : '-bottom-6', 'absolute left-0 top-0 flex w-6 justify-center']">
@@ -184,7 +184,10 @@
 
   const isTyping = ref(false)
 
-
+  const playSound = () => {
+    const audio = new Audio('/assets/tick.mp3');
+    audio.play();
+  }
 
   const scrollToBottom = () => {
     activityList.value.scrollTop = activityList.value.scrollHeight
@@ -210,6 +213,7 @@
 
       activity.value.push(userNewActivity)
       document.getElementById('comment').value = ''
+      playSound();
   
       const response = await fetch('http://0.0.0.0:8000/public/guests/2/chats/', {
         method: 'POST',
@@ -245,6 +249,7 @@
         dateTime: '',
       }
       activity.value.push(newActivity)
+      playSound();
       console.log(activity)
 
       // Add todos from the response to the activity array
@@ -257,6 +262,7 @@
         dateTime: todo.due_date,
       };
       activity.value.push(todoActivity);
+      playSound();
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       await fetchTodos();

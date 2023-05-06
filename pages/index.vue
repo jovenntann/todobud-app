@@ -22,7 +22,7 @@
     ```
   -->
   <div class="min-h-full">
-    <Popover as="header" class="bg-indigo-600 pb-24" v-slot="{ open }">
+    <Popover as="header" class="bg-green-600 pb-24" v-slot="{ open }">
       <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <div class="relative flex items-center justify-center py-5 lg:justify-between">
           <!-- Logo -->
