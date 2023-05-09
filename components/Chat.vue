@@ -83,7 +83,7 @@
       <div class="relative flex-auto">
         <div class="overflow-hidden rounded-lg pb-12 shadow-sm ring-1 ring-inset ring-gray-300">
           <label for="comment" class="sr-only">Add your comment</label>
-          <textarea rows="2" name="comment" id="comment" class="block w-full resize-none border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6" placeholder="Add your comment..." />
+          <textarea @keyup.enter="submitComment" rows="2" name="comment" id="comment" class="block w-full resize-none border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6" placeholder="Add your comment..." />
         </div>
   
         <div class="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">

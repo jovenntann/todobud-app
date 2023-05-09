@@ -61,6 +61,9 @@ const getEmoji = (status) => {
 };
 
 const getBarWidth = (todo) => {
+  if (todo.time_spent === 0 && todo.duration === 0) {
+    return '0%';
+  }
   const percentage = Math.min((todo.time_spent / todo.duration) * 100, 100);
   return `${percentage}%`;
 };
