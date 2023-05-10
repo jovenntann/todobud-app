@@ -1,8 +1,10 @@
 import { ref } from 'vue';
 
 export default function useTodos(todos) {
+  const apiBaseUrl = ref(import.meta.env.VITE_API_BASE_URL);
+
   const fetchTodos = async () => {
-    const response = await fetch('http://0.0.0.0:8000/public/guests/2/todos/', {
+    const response = await fetch(`${apiBaseUrl.value}/todos/`, {
       method: 'GET',
       headers: {
         'accept': 'application/json',

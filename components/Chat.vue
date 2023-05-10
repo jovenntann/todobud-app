@@ -152,6 +152,8 @@
   } from '@heroicons/vue/20/solid'
   import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
   
+  const apiBaseUrl = ref(import.meta.env.VITE_API_BASE_URL);
+
   const todos = inject('todos');
   const { fetchTodos } = useTodos(todos); 
 
@@ -215,7 +217,8 @@
       document.getElementById('comment').value = ''
       playSound();
   
-      const response = await fetch('http://0.0.0.0:8000/public/guests/2/chats/', {
+      
+      const response = await fetch(`${apiBaseUrl.value}/chats/`, {
         method: 'POST',
         headers: {
           'accept': 'application/json',
